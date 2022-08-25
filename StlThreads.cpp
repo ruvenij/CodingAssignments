@@ -7,7 +7,19 @@ void printHelloWorld(int index, const std::string& value)
 
 int main()
 {
-    std::thread newThread(printHelloWorld, 0, "Ruveni");
-    newThread.join();
+    int threadCount = 5;
+    std::vector<std::thread> threadsContainer;
+
+    for (int i = 0; i < threadCount; i++)
+    {
+        std::string val = "Thread : " + std::to_string(i);
+        threadsContainer.push_back(std::thread(printHelloWorld, i, val));
+    }
+
+    for (auto& th : threadsContainer)
+    {
+        th.join();
+    }
+
     return 0;
 }
